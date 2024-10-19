@@ -54,13 +54,13 @@ public:
     }
 
     void push_front(const T& item) {
-        if(full()) extendArray();
-        for (int i=last; i > 1; i--) {
-            tab[i] = tab[i-1];
-        }
-        tab[0] = item;
-        last++;
+    if (full()) extendArray(); 
+    for (int i = last; i > 0; --i) {  
+        tab[i] = tab[i-1];
     }
+    tab[0] = item; 
+    last++;  
+}
 
     void push_back(const T& item) {
         if (full()) extendArray();
@@ -143,26 +143,6 @@ public:
         return -1;
     }
 
-    void insert(int pos, const T& item) {
-        assert( pos >= 0 && pos <= last );
-        if(full()) extendArray();
-        for (int i=last; i > pos; i--) {
-            tab[i] = tab[i-1];
-        }
-        tab[pos] = item;
-        last++;
-    }
-
-    void insert(int pos, T&& item) {
-        assert(pos >= 0 && pos <= last);
-        if (full()) extendArray();
-        for (int i = last; i > pos; i--) {
-            tab[i] = tab[i - 1];
-        }
-        tab[pos] = std::move(item);
-        last++;
-    }
-
 
     ArrayList(const ArrayList& other) : msize(other.msize), last(other.last) {
         tab = new T[msize];
@@ -182,18 +162,6 @@ public:
         }
         return *this;
     }
-
-    T& operator[](int pos) {
-        assert( pos >= 0 && pos < last );
-        return tab[pos];
-    }
-
-
-    const T& operator[](int pos) const {
-        assert( pos >= 0 && pos < last );
-        return tab[pos];
-    }
-
 
 };
 
