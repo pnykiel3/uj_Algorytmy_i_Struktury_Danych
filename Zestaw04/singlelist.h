@@ -20,8 +20,8 @@ template <typename T>
 class SingleList {
     SingleNode<T> *head, *tail;
 public:
-    SingleList() : head(nullptr), tail(nullptr) {}                          //gotowe
-    ~SingleList(); // tu trzeba wyczyscic wezly                             //gotowe
+    SingleList() : head(nullptr), tail(nullptr) {}
+    ~SingleList(); // tu trzeba wyczyscic wezly
 
     SingleList(const SingleList& other); // copy constructor
     // usage:   SingleList<int> list2(list1);
@@ -31,16 +31,16 @@ public:
     // usage:   list2 = list1;
 
 
-    bool empty() const { return head == nullptr; }                                                      //gotowe
+    bool empty() const { return head == nullptr; }
     int size() const; // O(n) bo trzeba policzyc
-    void push_front(const T& item); // O(1), L.push_front(item)                                            //gotowe
-    void push_back(const T& item); // O(1), L.push_back(item)                                             //gotowe
-    T& front() const { return head->value; } // zwraca poczatek, nie usuwa                              //gotowe
-    T& back() const { return tail->value; } // zwraca koniec, nie usuwa                         //gotowe
-    void pop_front(); // usuwa poczatek O(1)                                                                //gotowe
-    void pop_back(); // usuwa koniec O(n)                                                                  //gotowe
-    void clear(); // czyszczenie listy z elementow O(n)                                             //gotowe
-    void display(); // O(n) wypisuje zawartosc listy                                                //gotowe
+    void push_front(const T& item); // O(1), L.push_front(item)
+    void push_back(const T& item); // O(1), L.push_back(item)
+    T& front() const { return head->value; } // zwraca poczatek, nie usuwa
+    T& back() const { return tail->value; } // zwraca koniec, nie usuwa
+    void pop_front(); // usuwa poczatek O(1)
+    void pop_back(); // usuwa koniec O(n)
+    void clear(); // czyszczenie listy z elementow O(n)
+    void display(); // O(n) wypisuje zawartosc listy
     void reverse(); // O(n)
 
 };
@@ -146,7 +146,7 @@ void SingleList<T>::clear() {
 template <typename T>
 SingleList<T>& SingleList<T>::operator=(const SingleList& other) { // operator przypisania
     if (this != &other) {
-        clear(); // usuń stare elementy
+        clear();
         SingleNode<T> *current = other.head;
         while (current != nullptr) {
             push_back(current->value);
@@ -159,13 +159,13 @@ SingleList<T>& SingleList<T>::operator=(const SingleList& other) { // operator p
 template <typename T>
 void SingleList<T>::reverse() {
     SingleNode<T> *prev = nullptr, *current = head, *next = nullptr;
-    tail = head; // tail wskazuje na nowy koniec listy
-    while (current != nullptr) {
+    tail = head;
+    while  (current != nullptr) {
         next = current->next;
         current->next = prev;
         prev = current;
         current = next;
     }
-    head = prev; // head wskazuje na nowy początek listy
+    head = prev;
 }
 #endif
