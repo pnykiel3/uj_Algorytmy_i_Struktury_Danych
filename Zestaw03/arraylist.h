@@ -13,16 +13,6 @@ class ArrayList {
     int last; // pierwsza wolna pozycja
     constexpr static int MIN_SIZE = 2;
 
-    void chopArray() {
-        msize--;
-        T* newtab = new T[msize];
-        for (int i=0; i < last; i++) {
-            newtab[i] = tab[i];
-        }
-        delete [] tab;
-        tab = newtab;
-    }
-
     void extendArray() {
         msize++;
         T* newtab = new T[msize];
@@ -47,7 +37,7 @@ public:
     int max_size() const { return msize; } // najwieksza mozliwa liczba elementow
 
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& L) {
-        for (int i=0; i < L.last; ++i) { // odwolanie L.last
+        for (int i=0; i < L.last;i++) { // odwolanie L.last
             os << L.tab[i] << " ";   // odwolanie L.tab
         }
         return os;
@@ -55,7 +45,7 @@ public:
 
     void push_front(const T& item) {
     if (full()) extendArray(); 
-    for (int i = last; i > 0; --i) {  
+    for (int i = last; i > 0; i--) {  
         tab[i] = tab[i-1];
     }
     tab[0] = item; 

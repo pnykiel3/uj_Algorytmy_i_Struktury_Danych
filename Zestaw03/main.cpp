@@ -4,9 +4,7 @@
 void test() {
     ArrayList<int> L1(5);
 
-    std::cout << "Test 0: Stworzono nową liste. Jaką ma pojemność?\n(5) = " << L1.max_size() << std::endl;
-
-    std::cout << "Test 1: Czy lista jest pusta?\n(1) = " << L1.empty() << std::endl;
+    std::cout << "Test 1: Stworzono nową liste. Jaką ma pojemność?\n(5) = " << L1.max_size() << std::endl;
 
     L1.push_back(0);
     L1.push_back(1);
