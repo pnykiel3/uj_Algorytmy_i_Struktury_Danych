@@ -1,81 +1,83 @@
+
 #include <iostream>
+#include <cassert>
 #include "mydeque.h"
 
 void test() {
     MyDeque<int> D1;
 
-    std::cout << "Test 0: Stworzono nową kolejkę. Czy jest pusta?\n(1) = " << D1.empty() << std::endl;
+    // Test 0: Czy nowa kolejka jest pusta?
+    assert(D1.empty());
 
+    // Test 1: Test push_back
     D1.push_back(0);
     D1.push_back(1);
     D1.push_back(8);
     D1.push_back(3);
     D1.push_back(4);
+    assert(D1.size() == 5);
 
-    std::cout << "Test 1: Czy działa push_back()?\n(0, 1, 8, 3, 4) = ";
-    D1.display();
-
-    std::cout << "Test 2: Ile jest elementów w kolejce?\n(5) = " << D1.size() << std::endl;
-
+    // Test 2: Test push_front
     D1.push_front(44);
     D1.push_front(12);
     D1.push_front(5);
+    assert(D1.size() == 8);
+    assert(D1.front() == 5);
+    assert(D1.back() == 4);
 
-    std::cout << "Test 3: Czy działa push_front()?\n(5, 12, 44, 0, 1, 8, 3, 4) = ";
-    D1.display();
-
-    std::cout << "Test 4: Pierwszy element?\n(5) = " << D1.front() << std::endl;
-    std::cout << "Test 5: Ostatni element?\n(4) = " << D1.back() << std::endl;
-
+    // Test 3: Test pop_front and pop_back
     D1.pop_front();
     D1.pop_back();
+    assert(D1.size() == 6);
+    assert(D1.front() == 12);
+    assert(D1.back() == 3);
 
-    std::cout << "Test 6: Czy działa pop_front() i pop_back()?\n(12, 44, 0, 1, 8, 3) = ";
+    // Test 4: Test display and display_reversed manually
+    std::cout << "Expected order (normal): 12 44 0 1 8 3" << std::endl;
+    std::cout << "Actual order (normal): ";
     D1.display();
-
-    std::cout << "Test 7: Odwrócona kolejność wyświetlania kolejki\n(3, 8, 1, 0, 44, 12) = ";
+    
+    std::cout << "Expected order (reversed): 3 8 1 0 44 12" << std::endl;
+    std::cout << "Actual order (reversed): ";
     D1.display_reversed();
 
+    // Test 5: Konstruktor kopiujący
     MyDeque<int> D2 = D1;
-    std::cout << "Test 8: Konstruktor kopiujący D2 = D1?\n(12, 44, 0, 1, 8, 3) = ";
-    D2.display();
+    assert(D2.size() == D1.size());
 
+    // Test 6: Clear queue
     D2.clear();
-    std::cout << "Test 9: Wyczyść kolejkę D2\n() = ";
-    D2.display();
+    assert(D2.empty());
+    assert(D2.size() == 0);
 
-    std::cout << "Test 10: Ile elementów w D2 po wyczyszczeniu?\n(0) = " << D2.size() << std::endl;
-
-    // Nowe testy:
+    // Test 7: Operator przypisania
     D2 = D1;
-    std::cout << "Test 11: Operator przypisania D2 = D1\n(12, 44, 0, 1, 8, 3) = ";
-    D2.display();
+    assert(D2.size() == D1.size());
 
-    std::cout << "Test 12: Ile elementów w D2 po przypisaniu?\n(6) = " << D2.size() << std::endl;
-
+    // Test 8: Clear and empty check
     D1.clear();
-    std::cout << "Test 13: Wyczyść kolejkę D1\n() = ";
-    D1.display();
+    assert(D1.empty());
 
-    std::cout << "Test 14: Czy kolejka D1 jest teraz pusta?\n(1) = " << D1.empty() << std::endl;
-
+    // Test 9: Ponowne dodawanie elementów i sprawdzenie front i back
     D1.push_back(42);
-    std::cout << "Test 15: Dodano 42 na końcu do D1\n(42) = ";
-    D1.display();
+    assert(D1.size() == 1);
+    assert(D1.front() == 42);
 
     D1.push_front(99);
-    std::cout << "Test 16: Dodano 99 na początku do D1\n(99, 42) = ";
-    D1.display();
+    assert(D1.size() == 2);
+    assert(D1.front() == 99);
+    assert(D1.back() == 42);
 
+    // Test 10: pop_back i pop_front
     D1.pop_back();
-    std::cout << "Test 17: Usunięto ostatni element z D1\n(99) = ";
-    D1.display();
+    assert(D1.size() == 1);
+    assert(D1.front() == 99);
 
     D1.pop_front();
-    std::cout << "Test 18: Usunięto pierwszy element z D1\n() = ";
-    D1.display();
+    assert(D1.empty());
+    assert(D1.size() == 0);
 
-    std::cout << "Test 19: Ile elementów w D1 po wszystkich operacjach?\n(0) = " << D1.size() << std::endl;
+    std::cout << "Wszystkie testy zakończone pomyślnie!" << std::endl;
 }
 
 int main() {
