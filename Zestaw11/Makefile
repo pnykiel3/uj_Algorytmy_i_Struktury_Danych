@@ -1,6 +1,6 @@
 DIR = `basename $(CURDIR)`
 ########################################
- LIB1 = notrandombinarytree
+ LIB1 = binarysearchtree
  EXEC1 = main
 ########################################
  EXECS = $(EXEC1)
