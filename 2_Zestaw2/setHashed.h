@@ -103,8 +103,9 @@ public:
         if (size != other.size) {
             return false;
         }
-        for (int i = 0; i < size; i++) {
-            for (Node<T>* a = table[i].getHead(); a; a = a -> getNext()) {
+
+        for (int i = 0; i < capacity; i++) {
+            for (Node<T>* a = table[i].getHead(); a; a = a->getNext()) {
                 if (!other.contains(a->data)) {
                     return false;
                 }
@@ -119,6 +120,11 @@ public:
             table[i].print();
         }
     }
+
+    int getSize() const {
+        return size;
+    }
+
 
 };
 
