@@ -1,9 +1,8 @@
 #ifndef PRIORITYQUEUEBINARY_H
 #define PRIORITYQUEUEBINARY_H
 
-#include <iostream>
 
-const int MAX_SIZE = 1000; // maksymalna liczba elementów w kopcu
+const int MAX_SIZE = 1000000; // maksymalna liczba elementów w kopcu
 
 class BinaryHeap {
 private:
@@ -129,4 +128,4 @@ public:
     }
 };
 
-#endif PRIORITYQUEUEBINARY_H
+#endif
