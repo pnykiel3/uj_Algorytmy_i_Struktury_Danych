@@ -105,8 +105,8 @@ void testDictionarySimple() {
 void testSetLinked() {
     std::cout << "=== Testowanie setLinked ===" << std::endl;
     setLinked set1;
-    set1.insert(10);
-    set1.insert(30);
+    set1.insert(1);
+    set1.insert(2);
 	set1.insert(20);
     assert(set1.exists(10));
     assert(set1.exists(20));

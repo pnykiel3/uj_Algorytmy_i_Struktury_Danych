@@ -8,7 +8,7 @@
 #include "dictionarysimple.h"
 
 #define NUM 750
-#define MEASUREMENTS 500.0
+#define MEASUREMENTS 200.0
 using namespace std;
 using namespace std::chrono;
 
@@ -21,7 +21,7 @@ long long measure_time(Func func) {
 }
 
 template<typename SetType>
-void showInsertComplexity(ofstream& outFile) {
+void insertComplexity(ofstream& outFile) {
     SetType mySet;
     std::mt19937 gen(std::random_device{}());
 
@@ -58,7 +58,7 @@ void DshowInsertCOmplexity(ofstream& outFile) {
   }
 
 template<typename SetType>
-void showRemoveComplexity(ofstream& outFile) {
+void removeComplexity(ofstream& outFile) {
     SetType mySet;
     std::mt19937 gen(std::random_device{}());
 
@@ -99,7 +99,7 @@ void DshowRemoveComplexity(ofstream& outFile) {
 }
 
 template<typename SetType>
-void showSumComplexity(ofstream& outFile) {
+void sumComplexity(ofstream& outFile) {
     SetType set1, set2;
     std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution<> dis(0, NUM - 1);
@@ -118,7 +118,7 @@ void showSumComplexity(ofstream& outFile) {
 }
 
 template<typename SetType>
-void showIntersectionComplexity(ofstream& outFile) {
+void intersectionComplexity(ofstream& outFile) {
     std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution<> dis(0, NUM - 1);
 
@@ -142,7 +142,7 @@ void showIntersectionComplexity(ofstream& outFile) {
 }
 
 template<typename SetType>
-void showContainsComplexity(ofstream& outFile) {
+void containsComplexity(ofstream& outFile) {
     SetType mySet;
     std::mt19937 gen(std::random_device{}());
 
@@ -177,7 +177,7 @@ void DshowContainsComplexity(ofstream& outFile) {
 }
 
 template<typename SetType>
-void showEqualityComplexity(ofstream& outFile) {
+void equalityComplexity(ofstream& outFile) {
     SetType set1, set2;
     std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution<> dis(0, NUM - 1);
@@ -196,7 +196,7 @@ void showEqualityComplexity(ofstream& outFile) {
 }
 
 template<typename SetType>
-void showDifferenceComplexity(ofstream& outFile) {
+void differenceComplexity(ofstream& outFile) {
     std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution<> dis(0, NUM - 1);
 
@@ -244,41 +244,41 @@ int main() {
 
       switch(choice){
         case 1: {
-          showInsertComplexity<setLinked>(outFileSL);
-          showInsertComplexity<setSimple>(outFileSS);
+          insertComplexity<setLinked>(outFileSL);
+          insertComplexity<setSimple>(outFileSS);
           DshowInsertCOmplexity(outFileD);
           break;
           }
         case 2: {
-          showRemoveComplexity<setLinked>(outFileSL);
-          showRemoveComplexity<setSimple>(outFileSS);
+          removeComplexity<setLinked>(outFileSL);
+          removeComplexity<setSimple>(outFileSS);
           DshowRemoveComplexity(outFileD);
           break;
           }
         case 3: {
-          showSumComplexity<setLinked>(outFileSL);
-            showSumComplexity<setSimple>(outFileSS);
+          sumComplexity<setLinked>(outFileSL);
+            sumComplexity<setSimple>(outFileSS);
             break;
           }
         case 4: {
- 			showIntersectionComplexity<setLinked>(outFileSL);
-            showIntersectionComplexity<setSimple>(outFileSS);
+ 			intersectionComplexity<setLinked>(outFileSL);
+            intersectionComplexity<setSimple>(outFileSS);
             break;
           }
         case 5: {
-            showContainsComplexity<setLinked>(outFileSL);
-            showContainsComplexity<setSimple>(outFileSS);
+            containsComplexity<setLinked>(outFileSL);
+            containsComplexity<setSimple>(outFileSS);
             DshowContainsComplexity(outFileD);
             break;
             }
         case 6: {
-            showEqualityComplexity<setLinked>(outFileSL);
-            showEqualityComplexity<setSimple>(outFileSS);
+            equalityComplexity<setLinked>(outFileSL);
+            equalityComplexity<setSimple>(outFileSS);
             break;
             }
         case 7: {
-            showDifferenceComplexity<setLinked>(outFileSL);
-            showDifferenceComplexity<setSimple>(outFileSS);
+            differenceComplexity<setLinked>(outFileSL);
+            differenceComplexity<setSimple>(outFileSS);
             break;
         default: std::cout << "Invalid choice!" << std::endl;
     	}
