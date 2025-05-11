@@ -12,8 +12,8 @@ int main() {
     assert(g.getVertexValue(1) == -1);
     assert(g.getEdgeValue(1, 2) == -1);
     assert(!g.adjacent(1, 2));
-    assert(g.neighbours(1).empty());
-    assert(g.neighbours(50).empty()); // Test dla dowolnego innego wierzchołka
+    assert(g.neighbors(1).empty());
+    assert(g.neighbors(50).empty()); // Test dla dowolnego innego wierzchołka
 
     // === Testy operacji na wierzchołkach ===
     std::cout << "Testy operacji na wierzchołkach..." << std::endl;
@@ -59,22 +59,22 @@ int main() {
     g.addEdge(40, 10); // Próba dodania krawędzi z nieistniejącego wierzchołka
     assert(!g.adjacent(40, 10));
 
-    // Testowanie neighbours (wyniki mogą być w różnej kolejności, sortujemy dla porównania)
-    std::list<int> n10 = g.neighbours(10);
+    // Testowanie neighbors (wyniki mogą być w różnej kolejności, sortujemy dla porównania)
+    std::list<int> n10 = g.neighbors(10);
     n10.sort();
     assert(n10.size() == 2);
     assert(n10.front() == 20);
     assert(n10.back() == 30);
 
-    std::list<int> n20 = g.neighbours(20);
+    std::list<int> n20 = g.neighbors(20);
     n20.sort(); // Chociaż tu jest tylko jeden element
     assert(n20.size() == 1);
     assert(n20.front() == 30);
 
-    std::list<int> n30 = g.neighbours(30);
+    std::list<int> n30 = g.neighbors(30);
     assert(n30.empty());
 
-    assert(g.neighbours(40).empty()); // Sąsiedzi nieistniejącego wierzchołka
+    assert(g.neighbors(40).empty()); // Sąsiedzi nieistniejącego wierzchołka
 
     // Testy wag krawędzi
     assert(g.getEdgeValue(10, 20) == 0); // Domyślna waga 0
@@ -100,7 +100,7 @@ int main() {
     g.removeEdge(10, 30);
     assert(!g.adjacent(10, 30));
     assert(g.getEdgeValue(10, 30) == -1);
-    n10 = g.neighbours(10); // Sprawdź sąsiadów ponownie
+    n10 = g.neighbors(10); // Sprawdź sąsiadów ponownie
     n10.sort();
     assert(n10.size() == 1);
     assert(n10.front() == 20);
@@ -135,13 +135,13 @@ int main() {
     assert(g.adjacent(20, 5));
 
     // Sprawdź sąsiadów wierzchołków, których krawędzie wchodziły do 10
-    std::list<int> n5 = g.neighbours(5);
+    std::list<int> n5 = g.neighbors(5);
     assert(n5.empty()); // Krawędź 5->10 usunięta
 
-    std::list<int> n30_after_remove = g.neighbours(30);
+    std::list<int> n30_after_remove = g.neighbors(30);
     assert(n30_after_remove.empty()); // Krawędź 30->10 usunięta
 
-    std::list<int> n20_after_remove = g.neighbours(20);
+    std::list<int> n20_after_remove = g.neighbors(20);
     n20_after_remove.sort();
     assert(n20_after_remove.size() == 2); // Pozostały 20->30 i 20->5
     assert(n20_after_remove.front() == 5);

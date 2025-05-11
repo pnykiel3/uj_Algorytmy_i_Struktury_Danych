@@ -1,7 +1,65 @@
+#include <map>
+#include <iostream>
+
 #include "../C/NEIGHBORgraph.h"
 
-int main () {
+
+std::map<int, int> kolorujGraf (ADTgraph& graf) {
+	std::map<int, int> kolory;
 	
+	std::list<int> nodes = graf.getAllVertices ();
+	while (nodes.size() > 0) {
+		long unsigned int max_neighbours = 0;
+		int max_node;
+		for (int node : nodes) {
+			long unsigned int neighbours = graf.neighbors(node).size();
+			if (neighbours >= max_neighbours) {
+				max_node = node;
+				max_neighbours = neighbours;
+			}
+		}
+		
+		int kolor = 0;
+		bool wszystkie = false;
+		while (!wszystkie) {
+			wszystkie = true;
+			for (int neighbour : graf.neighbors (max_node)) {
+				if (kolory.count (neighbour) == 1 && kolory[neighbour] == kolor) {
+					kolor++;
+					wszystkie = false;
+					break;
+				}
+			}
+		}
+		
+		kolory[max_node] = kolor;
+		nodes.remove (max_node);
+	}
+	
+	return kolory;
+}
+
+void zapisz(std::string filename, std::map<int, int> kolory, ADTgraph& graf) {
+    std::ofstream plik;
+	std::string dotColors[] = {"green", "lightblue", "red", "yellow", "orange", "purple", "pink", "brown", "gray"};
+    plik.open(filename + ".txt");
+
+    // Sprawdź, czy plik został poprawnie otwarty
+    if (!plik.is_open()) {
+        std::cerr << "Błąd: Nie można otworzyć pliku " << filename << ".txt" << std::endl;
+        return;
+    }
+
+    plik << "digraph G {" << std::endl;
+    for (const auto& para : kolory) {
+        plik << "\"" << graf.getVertexCaption(para.first) << "\"" << " [fillcolor=\"" << dotColors[para.second] << "\", style=filled]" << std::endl;
+}
+plik << "}";
+plik.close(); 
+}
+
+int main() {
+
 	ADTgraph graf;
 	graf.addVertex (1, "A-D"); // A-D
 	graf.addVertex (2, "D-A"); // D-A
@@ -16,6 +74,7 @@ int main () {
 	graf.addVertex (11, "E-C"); // E-C
 	graf.addVertex (12, "B-C"); // B-C
 	graf.addVertex (13, "B-D"); // B-D
+
 	graf.addEdge (1, 10);
 	graf.addEdge (1, 6);
 	graf.addEdge (1, 5);
@@ -89,9 +148,14 @@ int main () {
 	graf.addEdge (13, 3);
 	graf.addEdge (13, 6);
 	
-    std::string filename = "graf_D-2";
-	graf.save (filename, 1);
-    std::string cmd = "dot -Tpng " + filename + ".txt -o " + filename + ".jpg";
-    system(cmd.c_str());
-    return 0;
+	std::map<int, int> kolory = kolorujGraf (graf);
+	
+	for (std::pair<int, int> para : kolory) {
+		std::cout << graf.getVertexCaption(para.first) << " - " << para.second << std::endl;
+	}
+	zapisz("kolory", kolory, graf);
+	//save
+
+	
+	return 0;
 }

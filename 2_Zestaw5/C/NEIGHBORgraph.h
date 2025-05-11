@@ -7,6 +7,8 @@ class ADTgraph {
 
 public:
 
+// Klasa reprezentująca krawędź
+    // Waga krawędzi oraz wierzchołek końcowy( -1, czyli krawedz nie prowadzi do niczego)
     struct Edge {
         int weight = 0;
         int end_node = -1;
@@ -15,22 +17,25 @@ public:
 private:
 
     struct Node {
+        std::string caption = "";
         int weight = 0;
         std::list<Edge> edges;
     };
 
-    
+    //indeks wierzcholka(ID) oraz Node zawierajacy informacje o nim
+    // mapa robi to, ze wierzcholki sa posortowane po ID
     std::map<int, Node> graph;
 
 public:
 
+    // konstruktor pusty, bo mapa sama zajmie się inicjalizacją
     ADTgraph() {}
 
     
-    void addVertex(int x) {
+    void addVertex(int x, std::string caption = "") {
         // emplace nie wstawi elementu, jeśli klucz już istnieje
         // Drugi argument to konstruktor dla Node{} (pusty Node)
-        graph.emplace(x, Node{});
+        graph.emplace(x, Node{caption});
     }
 
     void removeVertex(int x) {
@@ -39,6 +44,7 @@ public:
         if (it_x == graph.end()) {
             return; // Wierzchołka nie ma
         }
+        // usuwa wierzchołek z mapy wraz z krawędziami wychodzącymi z niego
         graph.erase(it_x);
 
         // Usuń krawędzie wchodzące do x z innych wierzchołków
@@ -51,7 +57,7 @@ public:
         }
     }
 
-    // Sprawdzanie, czy istnieje krawędź pomiędzy x oraz y (użycie find i pętli const auto&)
+    // Sprawdzanie, czy istnieje krawędź pomiędzy x oraz y
     bool adjacent(int x, int y) {
         auto it_x = graph.find(x);
         if (it_x == graph.end()) {
@@ -67,8 +73,8 @@ public:
         return false;
     }
 
-    // Zwraca sąsiadów x (użycie find i pętli const auto&)
-    std::list<int> neighbours(int x) {
+    // Zwraca sąsiadów wierzchołka x
+    std::list<int> neighbors(int x) {
         std::list<int> nodes;
         auto it_x = graph.find(x);
         if (it_x != graph.end()) { // Sprawdź, czy wierzchołek x istnieje
@@ -88,6 +94,11 @@ public:
             // emplace_back do skonstruowania Edge bezpośrednio na liście
              it_x->second.edges.emplace_back(Edge{0, y}); // Edge
         }
+    }
+
+    void addUndirectedEdge(int x, int y) {
+        addEdge(x, y);
+        addEdge(y, x);
     }
 
     // Usuwa krawędź pomiędzy x i y
@@ -122,6 +133,21 @@ public:
         return -1; // Dla nieistniejącego x
     }
 
+    void setVertexCaption(int x, std::string caption) {
+        auto it_x = graph.find(x);
+        if (it_x != graph.end()) {
+            it_x->second.caption = caption;
+        }
+    }
+
+    std::string getVertexCaption(int x) {
+        auto it_x = graph.find(x);
+        if (it_x != graph.end()) {
+            return it_x->second.caption;
+        }
+        return "No"; // Dla nieistniejącego x
+    }
+
     // Kojarzy wartość v z krawędzią pomiędzy x oraz y
     void setEdgeValue(int x, int y, int v) {
         auto it_x = graph.find(x);
@@ -154,8 +180,17 @@ public:
         return graph.size();
     }
 
+    // Zwraca listę wszystkich identyfikatorów wierzchołków w grafie
+    std::list<int> getAllVertices() const {
+        std::list<int> vertices_ids;
+        for (const auto& pair : graph) {
+            vertices_ids.push_back(pair.first);
+        }
+        return vertices_ids;
+    }
+
     // Zapisuje graph do pliku
-    void save(std::string filename) {
+    void save(std::string filename, bool captions = false) {
         std::ofstream plik;
         plik.open(filename + ".txt");
 
@@ -166,15 +201,26 @@ public:
         }
 
         plik << "digraph G {" << std::endl;
+        if (captions) {
+            for (const auto& para : graph) {
+                for (const auto& edge : para.second.edges) {
+                    plik << '\t' << "\"" << para.second.caption << "\"" << " -> " << "\"" << graph.at(edge.end_node).caption << "\"" << std::endl;
+                }
+                if (para.second.edges.empty()) {
+                     plik << '\t' << para.first << ";" << std::endl;
+                }
+            }
+        } else {
         // pętle po mapie i liście (klucz to ID wierzchołka, para.second to Node)
         for (const auto& para : graph) {
             for (const auto& edge : para.second.edges) {
                 plik << '\t' << para.first << " -> " << edge.end_node << std::endl;
             }
             if (para.second.edges.empty()) {
-                 plik << '\t' << para.first << ";" << std::endl;
+                 plik << '\t' << para.second.caption << ";" << std::endl;
             }
         }
+    }
         plik << "}";
         plik.close(); 
     }

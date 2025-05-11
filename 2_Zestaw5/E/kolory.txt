@@ -1,0 +1,15 @@
+digraph G {
+"A-D" [fillcolor="lightblue", style=filled]
+"D-A" [fillcolor="lightblue", style=filled]
+"D-B" [fillcolor="green", style=filled]
+"D-C" [fillcolor="lightblue", style=filled]
+"A-B" [fillcolor="yellow", style=filled]
+"A-C" [fillcolor="yellow", style=filled]
+"B-A" [fillcolor="green", style=filled]
+"E-D" [fillcolor="green", style=filled]
+"E-A" [fillcolor="green", style=filled]
+"E-B" [fillcolor="red", style=filled]
+"E-C" [fillcolor="red", style=filled]
+"B-C" [fillcolor="red", style=filled]
+"B-D" [fillcolor="lightblue", style=filled]
+}
