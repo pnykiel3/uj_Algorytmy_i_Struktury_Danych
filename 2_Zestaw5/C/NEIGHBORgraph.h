@@ -50,6 +50,7 @@ public:
         // Usuń krawędzie wchodzące do x z innych wierzchołków
         for (auto& para : graph) { // Iteruj przez referencje, by modyfikować listy
             Node& node = para.second;
+            // Użyj remove_if z lambdą do usunięcia krawędzi wskazujących na x
             node.edges.remove_if([x](const Edge& edge) {
                 return edge.end_node == x;
             });
